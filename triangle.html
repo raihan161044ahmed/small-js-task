@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number Pattern</title>
+  <style>
+    .container{
+      margin-left: 10%;
+      margin-top: 5%;
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Number Pattern</h2>
+    <input type="number" id="inputNumber" placeholder="Enter a number">
+    <button onclick="generatePattern()">Generate Pattern</button>
+    <br><br>
+    <div id="patternOutput"></div>
+  </div>   
+    <script>
+      function generatePattern() {
+        var inputNumber = document.getElementById('inputNumber').value;
+      var patternOutput = document.getElementById('patternOutput');
+      
+      var pattern = '';
+      for (var i = 1; i <= inputNumber; i++) {
+        for (var j = 1; j <= i; j++) {
+          pattern += j + ' ';
+        }
+        pattern += '<br>';
+      }
+      
+      patternOutput.innerHTML = pattern;
+    }
+    </script>
+</body>
+</html>
