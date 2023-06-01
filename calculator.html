@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+</head>
+<body>
+  <h2>Calculator</h2>
+  <input type="text" id="result" placeholder="0" readonly onkeydown="handleKeyDown(event)">
+  <br><br>
+  <button onclick="appendInput('+')">+</button>
+  <button onclick="appendInput('-')">-</button>
+  <button onclick="appendInput('*')">*</button>
+  <button onclick="appendInput('/')">/</button>
+  <button onclick="appendInput('%')">%</button>
+  <button onclick="appendInput('**')">^</button>
+  <button onclick="calculateRoot()">√</button>
+  <br><br>
+  <button onclick="clearInput()">Clear</button>
+  <button onclick="calculate()">Calculate</button>
+  
+  <script>
+    function appendInput(value) {
+      var input = document.getElementById('result');
+      input.value += value;
+    }
+
+    function clearInput() {
+      var input = document.getElementById('result');
+      input.value = '';
+    }
+
+    function handleKeyDown(event) {
+      var key = event.key;
+
+      // Allow numeric input and supported operators
+      if (!isNaN(key) || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === '^' || key === 'Enter') {
+        appendInput(key);
+      }
+
+      // Evaluate the expression if Enter key is pressed
+      if (key === 'Enter') {
+        calculate();
+        event.preventDefault(); // Prevent form submission
+      }
+    }
+
+    function calculate() {
+      var input = document.getElementById('result');
+      var expression = input.value;
+
+      var result;
+      var operator = '';
+
+      // Extract operator from the expression
+      for (var i = 0; i < expression.length; i++) {
+        if (isNaN(expression[i]) && expression[i] !== '.') {
+          operator = expression[i];
+          break;
+        }
+      }
+
+      // Split the expression into operands
+      var operands = expression.split(operator);
+
+      // Perform the calculation based on the operator
+      switch (operator) {
+        case '+':
+          result = parseFloat(operands[0]) + parseFloat(operands[1]);
+          break;
+        case '-':
+          result = parseFloat(operands[0]) - parseFloat(operands[1]);
+          break;
+        case '*':
+          result = parseFloat(operands[0]) * parseFloat(operands[1]);
+          break;
+        case '/':
+          result = parseFloat(operands[0]) / parseFloat(operands[1]);
+          break;
+        case '%':
+          result = parseFloat(operands[0]) % parseFloat(operands[1]);
+          break;
+        case '**':
+          result = parseFloat(operands[0]) ** parseFloat(operands[1]);
+          break;
+        default:
+          input.value = 'Invalid Operation';
+          return;
+      }
+
+      // Display the result
+      input.value = result;
+    }
+
+    function calculateRoot() {
+      var input = document.getElementById('result');
+      var number = parseFloat(input.value);
+
+      if (number >= 0) {
+        var result = Math.sqrt(number);
+        input.value = result;
+      } else {
+        input.value = 'Invalid Input';
+      }
+    }
+  </script>
+</body>
+</html>
